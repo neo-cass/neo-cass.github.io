@@ -1,0 +1,287 @@
+/*
+  Design tokens follow the "Apple design analysis" DESIGN.md
+  (awesome-design-md, design-md/apple): one Action Blue accent, tight
+  display type, no shadows or gradients on chrome.
+
+  Palette is deliberately quiet: white and parchment only, a frosted
+  light nav, neutral pills. Blue is used for text links and focus alone.
+
+  Fonts: no font files are shipped. `-apple-system` resolves to SF Pro on
+  Apple devices; other platforms fall back to their system UI font.
+*/
+
+:root {
+  --primary: #0066cc;
+  --primary-focus: #0071e3;
+  --ink: #1d1d1f;
+  --ink-muted-80: #333333;
+  /* Slightly darker than the 48% token (#7a7a7a) so small text passes WCAG AA. */
+  --ink-muted: #6e6e73;
+  --hairline: #e0e0e0;
+  --canvas: #ffffff;
+  --parchment: #f5f5f7;
+  --parchment-hover: #e8e8ed;
+
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+          "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  --radius-card: 18px;
+  --radius-sm: 8px;
+  --radius-pill: 9999px;
+  --nav-h: 48px;
+  --content-w: 980px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: var(--nav-h);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+body {
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 17px;
+  line-height: 1.47;
+  letter-spacing: -0.374px;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { display: block; max-width: 100%; height: auto; }
+
+a { color: var(--primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+:focus-visible {
+  outline: 2px solid var(--primary-focus);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ---------- Global nav (frosted light) ---------- */
+.global-nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  height: var(--nav-h);
+  background: rgba(255, 255, 255, 0.92);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .global-nav {
+    background: rgba(255, 255, 255, 0.72);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+  }
+}
+
+.global-nav ul {
+  height: 100%;
+  max-width: var(--content-w);
+  margin: 0 auto;
+  padding: 0 22px;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.global-nav a {
+  color: var(--ink-muted-80);
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: -0.12px;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.global-nav a:hover,
+.global-nav a:focus-visible { opacity: 1; text-decoration: none; }
+
+.global-nav .brand { color: var(--ink); font-weight: 600; opacity: 1; }
+
+/* ---------- Tiles (full-bleed sections) ---------- */
+.tile {
+  padding: 80px 22px;
+  text-align: center;
+}
+.tile--light     { background: var(--canvas); }
+.tile--parchment { background: var(--parchment); }
+
+.tile__inner {
+  max-width: var(--content-w);
+  margin: 0 auto;
+}
+
+h1, h2 {
+  font-weight: 600;
+  letter-spacing: -0.28px;
+}
+
+h1 {
+  font-size: clamp(40px, 8vw, 56px);
+  line-height: 1.07;
+}
+
+h2 {
+  font-size: clamp(28px, 5vw, 40px);
+  line-height: 1.1;
+  letter-spacing: 0;
+}
+
+.lead {
+  margin-top: 8px;
+  font-size: clamp(21px, 3.5vw, 28px);
+  line-height: 1.14;
+  font-weight: 400;
+  letter-spacing: 0.196px;
+  color: var(--ink-muted-80);
+}
+
+/* ---------- Hero ---------- */
+.hero { padding-top: 64px; }
+
+.avatar {
+  width: 160px;
+  height: 160px;
+  margin: 0 auto 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--parchment);
+}
+
+.pills {
+  margin-top: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* One neutral style for every link, so no pill ever looks "pre-selected". */
+.pill {
+  display: inline-block;
+  padding: 11px 22px;
+  border-radius: var(--radius-pill);
+  background: var(--parchment);
+  color: var(--ink);
+  font-size: 17px;
+  line-height: 1.2;
+  letter-spacing: -0.374px;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+.pill:hover { background: var(--parchment-hover); text-decoration: none; }
+.pill:active { transform: scale(0.95); }
+
+/* ---------- Research ---------- */
+.card {
+  display: block;
+  max-width: 640px;
+  margin: 40px auto 0;
+  padding: 24px;
+  border-radius: var(--radius-card);
+  background: var(--canvas);
+  color: var(--ink);
+  text-align: left;
+}
+
+.card:hover { text-decoration: none; }
+
+.card__title {
+  font-size: 21px;
+  line-height: 1.19;
+  font-weight: 600;
+  letter-spacing: 0.231px;
+}
+
+.card__meta {
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.43;
+  letter-spacing: -0.224px;
+  color: var(--ink-muted);
+}
+
+.card__link {
+  display: inline-block;
+  margin-top: 16px;
+  color: var(--primary);
+}
+
+.card:hover .card__link { text-decoration: underline; }
+.card__link::after { content: " \203A"; }
+
+/* ---------- Photo strip (small, below the research) ---------- */
+.photos { padding-top: 64px; padding-bottom: 64px; }
+
+.photos h2 { font-size: clamp(24px, 4vw, 28px); }
+
+/*
+  Justified row: each figure's flex-grow is its own width/height ratio
+  (--a), so all photos come out the same height while every image is
+  shown in full, uncropped. Each links to its full-size version.
+*/
+.photo-strip {
+  max-width: 720px;
+  margin: 28px auto 0;
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+}
+
+.photo-row { display: contents; }
+
+.photo-strip figure {
+  flex: var(--a) 1 0;
+  min-width: 0;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--parchment);
+}
+
+.photo-strip a { display: block; }
+.photo-strip img { width: 100%; height: auto; transition: opacity 0.2s ease; }
+.photo-strip a:hover img { opacity: 0.9; }
+
+/* ---------- Footer ---------- */
+.footer {
+  background: var(--parchment);
+  padding: 32px 22px;
+  text-align: center;
+  color: var(--ink-muted);
+  font-size: 12px;
+  line-height: 1.33;
+  letter-spacing: -0.12px;
+}
+
+.footer a { color: var(--ink-muted-80); }
+
+.footer ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 20px;
+  margin-bottom: 12px;
+}
+
+/* ---------- Small screens ---------- */
+@media (max-width: 640px) {
+  .tile { padding: 56px 16px; }
+  .hero { padding-top: 40px; }
+  .avatar { width: 128px; height: 128px; }
+  .pill { font-size: 15px; padding: 10px 18px; }
+
+  /* Two photos per row, still justified. */
+  .photo-strip { flex-direction: column; gap: 10px; }
+  .photo-row { display: flex; gap: 10px; }
+}

@@ -5,35 +5,93 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Neo Cass</title>
 <meta name="description" content="Neo Cass — software engineer at CERN.">
-<link rel="stylesheet" href="style.css">
+<meta name="theme-color" content="#000000">
+<link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-<main>
-  <header class="hero">
-    <div class="photo" id="photo" aria-hidden="false">
-      <!-- Drop your photo at assets/photo.jpg; initials show until it exists. -->
-      <img src="assets/photo.jpg" alt="Photo of Neo Cass" width="140" height="140"
-           onerror="this.remove(); document.getElementById('photo').textContent = 'NC';">
-    </div>
-    <h1>Neo Cass</h1>
-    <p class="tagline">Software engineer at CERN</p>
 
-    <nav class="links" aria-label="Profiles">
-      <a class="primary" href="/cv/NeoCassCV.pdf">Résumé</a>
-      <a href="https://github.com/neo-cass" target="_blank" rel="noopener me">GitHub</a>
-      <a href="https://linkedin.com/in/neocass" target="_blank" rel="noopener me">LinkedIn</a>
-      <a href="https://orcid.org/0009-0008-6583-9065" target="_blank" rel="noopener me">ORCID</a>
-    </nav>
+<nav class="global-nav" aria-label="Primary">
+  <ul>
+    <li><a class="brand" href="#top">Neo Cass</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="/cv/cv.pdf">Résumé</a></li>
+  </ul>
+</nav>
+
+<main id="top">
+  <header class="tile tile--light hero">
+    <div class="tile__inner">
+      <img class="avatar" src="assets/images/profile.webp" alt="Portrait of Neo Cass" width="560" height="560">
+      <h1>Neo Cass</h1>
+      <p class="lead">Software engineer at CERN</p>
+
+      <nav class="pills" aria-label="Profiles and résumé">
+        <a class="pill" href="/cv/cv.pdf">Résumé</a>
+        <a class="pill" href="https://github.com/neo-cass" target="_blank" rel="noopener me">GitHub</a>
+        <a class="pill" href="https://linkedin.com/in/neocass" target="_blank" rel="noopener me">LinkedIn</a>
+        <a class="pill" href="https://orcid.org/0009-0008-6583-9065" target="_blank" rel="noopener me">ORCID</a>
+      </nav>
+    </div>
   </header>
 
-  <section aria-labelledby="pub-heading">
-    <h2 id="pub-heading">Publication</h2>
-    <a class="card" href="https://doi.org/10.17181/x7kbq-qrv65" target="_blank" rel="noopener">
-      <div class="title">RADE JAPC Service: A New Service For Controlling and Monitoring Devices at CERN</div>
-      <div class="meta">Master's thesis · University of Bath &amp; CERN · 2026 · doi:10.17181/x7kbq-qrv65</div>
-    </a>
+  <section class="tile tile--parchment" id="research" aria-labelledby="research-heading">
+    <div class="tile__inner">
+      <h2 id="research-heading">Research</h2>
+      <a class="card" href="https://doi.org/10.17181/x7kbq-qrv65" target="_blank" rel="noopener">
+        <div class="card__title">RADE JAPC Service: A New Service For Controlling and Monitoring Devices at CERN</div>
+        <div class="card__meta">Master’s thesis · University of Bath &amp; CERN · 2026 · doi:10.17181/x7kbq-qrv65</div>
+        <span class="card__link">Read the thesis</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="tile tile--light photos" aria-labelledby="photos-heading">
+    <div class="tile__inner">
+      <h2 id="photos-heading">This is cringe</h2>
+
+      <div class="photo-strip">
+        <div class="photo-row">
+          <figure style="--a:0.75">
+            <a href="assets/images/gallery/cern-tunnel.webp" target="_blank" rel="noopener">
+              <img src="assets/images/gallery/cern-tunnel.webp" width="1200" height="1600" loading="lazy" decoding="async"
+                   alt="Neo in a hard hat on a green platform beside blue accelerator magnets in an underground tunnel">
+            </a>
+          </figure>
+          <figure style="--a:0.75">
+            <a href="assets/images/gallery/graduation.webp" target="_blank" rel="noopener">
+              <img src="assets/images/gallery/graduation.webp" width="1200" height="1600" loading="lazy" decoding="async"
+                   alt="Neo in a graduation gown and cap standing in front of a carved wooden door">
+            </a>
+          </figure>
+        </div>
+        <div class="photo-row">
+          <figure style="--a:0.777">
+            <a href="assets/images/gallery/thesis-talk.webp" target="_blank" rel="noopener">
+              <img src="assets/images/gallery/thesis-talk.webp" width="1200" height="1545" loading="lazy" decoding="async"
+                   alt="Neo presenting the “RADE JAPC Service” thesis from the lectern, beneath the title slide">
+            </a>
+          </figure>
+          <figure style="--a:1.076">
+            <a href="assets/images/gallery/poster-day.webp" target="_blank" rel="noopener">
+              <img src="assets/images/gallery/poster-day.webp" width="1200" height="1115" loading="lazy" decoding="async"
+                   alt="Neo smiling beside the “Modernising RADE Middleware” poster at BE Poster Day">
+            </a>
+          </figure>
+        </div>
+      </div>
+    </div>
   </section>
 </main>
-<footer>&copy; 2026 Neo Cass</footer>
+
+<footer class="footer">
+  <ul>
+    <li><a href="/cv/cv.pdf">Résumé</a></li>
+    <li><a href="https://github.com/neo-cass" target="_blank" rel="noopener me">GitHub</a></li>
+    <li><a href="https://linkedin.com/in/neocass" target="_blank" rel="noopener me">LinkedIn</a></li>
+    <li><a href="https://orcid.org/0009-0008-6583-9065" target="_blank" rel="noopener me">ORCID</a></li>
+  </ul>
+  <p>&copy; 2026 Neo Cass</p>
+</footer>
+
 </body>
 </html>
