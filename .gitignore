@@ -1,1 +1,9 @@
 .DS_Store
+__pycache__/
+
+# Build output (scripts/build.py); GitHub Actions rebuilds it on every deploy.
+dist/
+
+# Untouched camera originals carry EXIF/GPS data and must never be committed.
+# Keep them outside the repo, or in this folder (ignored) while building images.
+originals/

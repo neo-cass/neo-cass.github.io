@@ -1,0 +1,561 @@
+/*
+  neocass.com: styles
+
+  Follows the "Apple design analysis" DESIGN.md (awesome-design-md, design-md/apple):
+  one Action Blue accent, tight display type on a 17px body, full-bleed tiles whose
+  background change is the divider, no shadows or gradients on chrome.
+
+  Conventions
+  - Colours and spacing are tokens (custom properties); never inline a hex below the
+    token blocks.
+  - Type is written in rem so it follows the reader's browser setting. 1rem = 16px, so
+    the spec's px values appear as comments. Tracking is in em (spec px / font size).
+  - Breakpoints from the spec: 1068, 734, 640, 419 px.
+  - Light and dark themes follow the visitor's system setting (prefers-color-scheme).
+    Dark uses the spec's dark surfaces; only the token block changes.
+
+  Deliberate deviations from the spec (owner's call or accessibility)
+  - Light theme: no dark tiles and no black nav, which the owner found heavy. Surfaces
+    alternate white / parchment; the nav is the spec's frosted parchment variant.
+  - Text-sized greys are #6e6e73 (light) / #a1a1a6 (dark), not the spec's ink-muted-48
+    (#7a7a7a, 3.9:1 on parchment), so small text stays above WCAG AA (4.5:1).
+  - Form fields use a #86868b border, not the spec's 8% black (1.2:1), to meet the
+    3:1 non-text contrast rule for input boundaries.
+  - The footer is the page canvas with a hairline above it, not parchment, so it always
+    separates from the last tile whether or not the contact form is shown.
+  - Fonts are never downloaded. `-apple-system` resolves to SF Pro on Apple devices;
+    other platforms use their own system UI font.
+*/
+
+:root {
+  color-scheme: light dark;
+
+  /* Colour (light) */
+  --primary: #0066cc;              /* Action Blue: links and interactive text */
+  --primary-focus: #0071e3;        /* focus ring */
+  --primary-solid: #0066cc;        /* filled button */
+  --primary-solid-hover: #0071e3;
+  --ink: #1d1d1f;
+  --ink-muted-80: #333333;
+  --ink-muted: #6e6e73;            /* see deviations above */
+  --hairline: #e0e0e0;
+  --field-border: #86868b;         /* see deviations above */
+  --canvas: #ffffff;
+  --parchment: #f5f5f7;
+  --parchment-hover: #e8e8ed;      /* derived: pill hover */
+  --card: #ffffff;
+  --nav-bg: rgba(245, 245, 247, 0.92);
+  --nav-bg-frost: rgba(245, 245, 247, 0.8);
+  --nav-line: rgba(0, 0, 0, 0.08);
+
+  /* Spacing (8px base) */
+  --space-xxs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 17px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-xxl: 48px;
+  --space-section: 80px;
+
+  /* Shape */
+  --radius-sm: 8px;                /* inline card imagery */
+  --radius-card: 18px;             /* cards, large fields */
+  --radius-pill: 9999px;           /* actions and single-line fields */
+
+  /* Layout */
+  --nav-h: 44px;
+  --content-w: 980px;
+
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+          "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/* Colour (dark): the spec's dark surfaces and Sky Link Blue. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary: #2997ff;            /* primary-on-dark */
+    --primary-focus: #2997ff;
+    --ink: #ffffff;                /* body-on-dark */
+    --ink-muted-80: #cccccc;       /* body-muted */
+    --ink-muted: #a1a1a6;
+    --hairline: #424245;
+    --canvas: #000000;             /* surface-black */
+    --parchment: #272729;          /* surface-tile-1 */
+    --parchment-hover: #2d2d2f;    /* lightest shade where link blue still passes 4.5:1 */
+    --card: #1d1d1f;
+    --nav-bg: rgba(0, 0, 0, 0.92);
+    --nav-bg-frost: rgba(0, 0, 0, 0.8);
+    --nav-line: rgba(255, 255, 255, 0.12);
+  }
+}
+
+/* ---------- Base ---------- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: var(--nav-h);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+body {
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 1.0625rem;            /* 17px body */
+  line-height: 1.47;
+  letter-spacing: -0.022em;        /* -0.374px */
+  -webkit-font-smoothing: antialiased;
+}
+
+[hidden] { display: none !important; }   /* must beat component display rules */
+
+img { display: block; max-width: 100%; height: auto; }
+
+a { color: var(--primary); text-decoration: none; }
+
+@media (hover: hover) {
+  a:hover { text-decoration: underline; }
+}
+
+:focus-visible {
+  outline: 2px solid var(--primary-focus);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; }
+}
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: var(--space-sm);
+  z-index: 20;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: var(--space-xs) 15px;   /* button-dark-utility */
+  border-radius: var(--radius-sm);
+  background: var(--ink);
+  color: var(--canvas);
+  font-size: 0.875rem;
+}
+
+.skip-link:focus { top: var(--space-xs); }
+
+/* ---------- Navigation (frosted, 44px) ---------- */
+.global-nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  height: var(--nav-h);
+  background: var(--nav-bg);
+}
+
+/* The hairline is drawn over the bar, not added to it, so links keep the full 44px. */
+.global-nav::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  background: var(--nav-line);
+  pointer-events: none;
+}
+
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .global-nav {
+    background: var(--nav-bg-frost);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+  }
+}
+
+.global-nav ul {
+  height: 100%;
+  max-width: var(--content-w);
+  margin: 0 auto;
+  padding: 0 calc(var(--space-lg) - var(--space-xs));
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+}
+
+.global-nav li { display: flex; }
+
+/* Links fill the full bar height so every one is at least 44px tall. */
+.global-nav a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  padding: 0 var(--space-xs);
+  color: var(--ink-muted-80);
+  font-size: 0.75rem;              /* nav-link 12px */
+  line-height: 1;
+  letter-spacing: -0.01em;         /* -0.12px */
+}
+
+.global-nav .brand { color: var(--ink); font-weight: 600; }
+
+@media (hover: hover) {
+  .global-nav a:hover { color: var(--ink); text-decoration: none; }
+}
+
+/* ---------- Tiles (full-bleed sections) ---------- */
+.tile {
+  padding: var(--space-section) var(--space-lg);
+  text-align: center;
+}
+
+.tile--light     { background: var(--canvas); }
+.tile--parchment { background: var(--parchment); }
+
+.tile__inner {
+  max-width: var(--content-w);
+  margin: 0 auto;
+}
+
+/* Whitespace under a tile headline: 48px, per the spec's 48-64px rule. */
+.tile__inner > h2 + * { margin-top: var(--space-xxl); }
+
+h1, h2 { font-weight: 600; }
+
+h1 {                               /* hero-display */
+  font-size: 3.5rem;               /* 56px */
+  line-height: 1.07;
+  letter-spacing: -0.005em;        /* -0.28px */
+}
+
+h2 {                               /* display-lg */
+  font-size: 2.5rem;               /* 40px */
+  line-height: 1.1;
+  letter-spacing: 0;
+}
+
+.lead {                            /* lead */
+  margin-top: var(--space-xs);
+  font-size: 1.75rem;              /* 28px */
+  line-height: 1.14;
+  font-weight: 400;
+  letter-spacing: 0.007em;         /* 0.196px */
+  color: var(--ink-muted-80);
+}
+
+/* ---------- Hero ---------- */
+.hero { padding-top: 64px; }
+
+.avatar {
+  width: 160px;
+  height: 160px;
+  margin: 0 auto var(--space-lg);
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--parchment);
+}
+
+.pills {
+  margin-top: var(--space-xl);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-sm);
+}
+
+/* One style for every link, so no pill ever looks "pre-selected". */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;                /* touch target */
+  padding: 11px 22px;              /* button-primary padding */
+  border-radius: var(--radius-pill);
+  background: var(--parchment);
+  color: var(--primary);
+  line-height: 1.2;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+@media (hover: hover) {
+  .pill:hover { background: var(--parchment-hover); text-decoration: none; }
+}
+
+.pill:active { transform: scale(0.95); }
+
+/* ---------- Cards (publications, presentation, résumé) ---------- */
+.cards {
+  max-width: 880px;
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+}
+
+/* A lone card keeps the width of one column of the two-card grid. */
+.cards--single { grid-template-columns: minmax(0, 428px); justify-content: center; }
+.cards--wide   { grid-template-columns: minmax(0, 640px); justify-content: center; }
+
+.card {                            /* store-utility-card */
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-lg);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-card);
+  background: var(--card);
+  color: var(--ink);
+  text-align: left;
+}
+
+@media (hover: hover) {
+  .card:hover { text-decoration: none; }
+  .card:hover .card__link { text-decoration: underline; }
+}
+
+/* Card with a document preview beside the text. */
+.card--media {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: var(--space-lg);
+  align-items: start;
+}
+
+.card__preview {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--hairline);   /* shows the page edge on a white card */
+  border-radius: var(--radius-sm);
+}
+
+.card__body {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+}
+
+.card__title {                     /* body-strong */
+  font-size: 1.0625rem;
+  line-height: 1.24;
+  font-weight: 600;
+  letter-spacing: -0.022em;
+}
+
+.card__meta {                      /* caption */
+  margin-top: var(--space-xs);
+  font-size: 0.875rem;
+  line-height: 1.43;
+  letter-spacing: -0.016em;        /* -0.224px */
+  color: var(--ink-muted);
+}
+
+.card__link {
+  align-self: flex-start;
+  margin-top: auto;
+  padding-top: var(--space-md);
+  color: var(--primary);
+}
+
+.card__link::after { content: " \203A"; }
+
+/* ---------- Photo strip ---------- */
+/*
+  Justified row: each figure's flex-grow equals its width/height ratio, so every
+  photo in the row has the same height and none is cropped. Thumbnails are shown;
+  each links to the full-size image.
+*/
+.photo-strip {
+  max-width: 720px;
+  margin-inline: auto;
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.photo-row { display: contents; }
+
+.photo-strip figure {
+  flex: var(--a, 1) 1 0;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  background: var(--hairline);
+}
+
+.photo--tunnel, .photo--graduation { --a: 0.75; }
+.photo--talk   { --a: 0.777; }
+.photo--poster { --a: 1.076; }
+
+.photo-strip a { display: block; }
+
+/* ---------- Lightbox (PhotoSwipe, vendored) ---------- */
+/* Caption under the photo; PhotoSwipe's own stylesheet handles everything else. */
+.pswp__caption {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: var(--space-md) var(--space-lg);
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-family: var(--font);
+  font-size: 0.875rem;             /* caption */
+  line-height: 1.43;
+  letter-spacing: -0.016em;
+  text-align: center;
+  pointer-events: none;
+}
+
+.pswp__caption:empty { display: none; }
+
+/* ---------- Contact form ---------- */
+.form {
+  max-width: 520px;
+  margin-inline: auto;
+  display: grid;
+  gap: var(--space-md);
+  text-align: left;
+}
+
+.form label {                      /* caption-strong */
+  display: block;
+  margin-bottom: var(--space-xs);
+  font-size: 0.875rem;
+  line-height: 1.29;
+  font-weight: 600;
+  letter-spacing: -0.016em;
+}
+
+.form input[type="text"],
+.form input[type="email"],
+.form textarea {                   /* search-input */
+  width: 100%;
+  min-height: 44px;
+  padding: var(--space-sm) 20px;
+  border: 1px solid var(--field-border);
+  border-radius: var(--radius-pill);
+  background: var(--canvas);
+  color: var(--ink);
+  font: inherit;
+  letter-spacing: inherit;
+}
+
+.form textarea {
+  min-height: 140px;
+  border-radius: var(--radius-card);   /* a pill cannot hold several lines */
+  resize: vertical;
+}
+
+.form input:focus-visible,
+.form textarea:focus-visible { border-color: var(--primary-focus); }
+
+.hp { display: none; }             /* honeypot field: never shown to people */
+
+.button {                          /* button-primary */
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 11px 22px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--primary-solid);
+  color: #fff;
+  font: inherit;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+@media (hover: hover) {
+  .button:hover { background: var(--primary-solid-hover); }
+}
+
+.button:active { transform: scale(0.95); }
+.button[disabled] { opacity: 0.5; cursor: default; transform: none; }
+
+.form__status {
+  min-height: 1.47em;
+  font-size: 0.875rem;
+  line-height: 1.43;
+  letter-spacing: -0.016em;
+  color: var(--ink-muted-80);
+}
+
+.form__note {
+  font-size: 0.75rem;              /* fine-print */
+  line-height: 1.33;
+  letter-spacing: -0.01em;
+  color: var(--ink-muted);
+}
+
+/* ---------- 404 ---------- */
+.notfound {
+  min-height: calc(100vh - var(--nav-h) - 110px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---------- Footer ---------- */
+.footer {
+  padding: var(--space-xl) var(--space-lg);
+  border-top: 1px solid var(--hairline);
+  background: var(--canvas);
+  text-align: center;
+  color: var(--ink-muted);
+  font-size: 0.75rem;              /* fine-print */
+  line-height: 1.33;
+  letter-spacing: -0.01em;
+}
+
+.footer ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: var(--space-xs);
+}
+
+.footer a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;                /* touch target */
+  padding: 0 var(--space-sm);
+  color: var(--ink-muted-80);
+  font-size: 0.875rem;
+  letter-spacing: -0.016em;
+}
+
+/* ---------- Responsive (spec breakpoints) ---------- */
+@media (max-width: 1068px) {
+  h1 { font-size: 2.5rem; }        /* 40px */
+}
+
+@media (max-width: 734px) {
+  .tile { padding-block: var(--space-xxl); }
+  .hero { padding-top: var(--space-xxl); }
+}
+
+@media (max-width: 640px) {
+  h1 { font-size: 2.125rem; }      /* 34px */
+  h2 { font-size: 1.75rem; }       /* 28px */
+  .lead { font-size: 1.3125rem; }  /* 21px */
+  .tile__inner > h2 + * { margin-top: var(--space-xl); }
+  .avatar { width: 128px; height: 128px; }
+
+  .cards, .cards--single, .cards--wide { grid-template-columns: minmax(0, 1fr); }
+  .card--media { grid-template-columns: 1fr; }
+  .card__preview { max-width: 240px; }
+
+  /* Photos: two per row, still justified. */
+  .photo-strip { flex-direction: column; }
+  .photo-row { display: flex; gap: var(--space-sm); }
+}
+
+@media (max-width: 419px) {
+  h1 { font-size: 1.75rem; }       /* 28px */
+}
