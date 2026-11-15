@@ -391,26 +391,6 @@ h2 {                               /* display-lg */
 
 .photo-strip a { display: block; }
 
-/* ---------- Lightbox (PhotoSwipe, vendored) ---------- */
-/* Caption under the photo; PhotoSwipe's own stylesheet handles everything else. */
-.pswp__caption {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  padding: var(--space-md) var(--space-lg);
-  background: rgba(0, 0, 0, 0.6);
-  color: #fff;
-  font-family: var(--font);
-  font-size: 0.875rem;             /* caption */
-  line-height: 1.43;
-  letter-spacing: -0.016em;
-  text-align: center;
-  pointer-events: none;
-}
-
-.pswp__caption:empty { display: none; }
-
 /* ---------- Contact form ---------- */
 .form {
   max-width: 520px;

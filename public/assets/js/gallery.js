@@ -4,8 +4,8 @@
   Progressive enhancement: each thumbnail is a normal link to the full-size image, so
   without JavaScript (or with a modified click such as cmd/ctrl-click) it simply opens
   the file. With JavaScript, a plain click opens the lightbox: previous/next arrows,
-  keyboard arrows, swipe, Esc to close, pinch/double-click to zoom, and a caption taken
-  from each image's alt text.
+  keyboard arrows, swipe, Esc to close, and pinch/double-click to zoom. No caption is shown;
+  each image's alt text stays in the page for screen readers.
 
   Each link carries data-pswp-width / data-pswp-height (the full-size pixel dimensions),
   which PhotoSwipe needs to lay out the image before it has loaded.
@@ -25,23 +25,6 @@ const lightbox = new PhotoSwipeLightbox({
   arrowPrevTitle: 'Previous photo',
   arrowNextTitle: 'Next photo',
   errorMsg: 'This photo could not be loaded.'
-});
-
-// Caption = the thumbnail's alt text (textContent, never HTML).
-lightbox.on('uiRegister', () => {
-  lightbox.pswp.ui.registerElement({
-    name: 'caption',
-    order: 9,
-    isButton: false,
-    appendTo: 'root',
-    onInit: (element, pswp) => {
-      pswp.on('change', () => {
-        const link = pswp.currSlide.data.element;
-        const image = link && link.querySelector('img');
-        element.textContent = image ? image.alt : '';
-      });
-    }
-  });
 });
 
 lightbox.init();

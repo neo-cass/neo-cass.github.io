@@ -79,7 +79,7 @@ whenever the CV changes. To add a photo: add it to `GALLERY`, run the script, ad
 ## Photo lightbox
 
 Clicking a gallery thumbnail opens [PhotoSwipe](https://photoswipe.com) (MIT): arrows,
-keyboard, swipe, zoom, captions from alt text. It is vendored in
+keyboard, swipe and zoom, with no captions (alt text stays in the page for screen readers). It is vendored in
 `public/assets/vendor/photoswipe/` (the CSP only allows same-origin scripts) with its version,
 source and checksums recorded in that folder's README. Without JavaScript the thumbnails are
 plain links to the full image.
