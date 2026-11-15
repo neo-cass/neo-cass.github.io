@@ -7,6 +7,7 @@
 What it does
   1. renders every src/pages/*.html, filling in shared partials from src/partials/
   2. copies public/ (css, js, images, icons, robots.txt, ...) into dist/ unchanged
+  3. appends a content fingerprint (?v=<hash>) to the css/js/vendor URLs the pages reference
 
 Template syntax (deliberately tiny; an unknown name or missing partial fails the build)
   {{ name }}                 value from the page's front matter, HTML-escaped
@@ -21,6 +22,7 @@ from __future__ import annotations
 import argparse
 import datetime
 import functools
+import hashlib
 import html
 import http.server
 import re
@@ -37,6 +39,10 @@ PUBLIC = ROOT / "public"
 INCLUDE = re.compile(r'\{%\s*include\s+"([\w./-]+)"\s*%\}')
 VARIABLE = re.compile(r"\{\{\s*(\w+)\s*\}\}")
 FRONT_MATTER = re.compile(r"\A---\n(.*?)\n---\n", re.S)
+# Stylesheets and scripts that pages reference get a content fingerprint (?v=<hash>), so a
+# browser that cached an old copy can never be paired with newer HTML (GitHub Pages lets
+# browsers cache for 10 minutes under an unchanged URL).
+ASSET_REF = re.compile(r'((?:href|src)=")(/assets/(?:css|js|vendor)/[^"?#]+)(")')
 
 
 def parse_page(text: str, name: str) -> tuple[dict[str, str], str]:
@@ -74,6 +80,17 @@ def render(template: str, variables: dict[str, str], where: str, depth: int = 0)
     return VARIABLE.sub(variable, INCLUDE.sub(include, template))
 
 
+def fingerprint(page_html: str, where: str) -> str:
+    def stamp(match: re.Match) -> str:
+        asset = PUBLIC / match.group(2).lstrip("/")
+        if not asset.is_file():
+            sys.exit(f"{where}: references {match.group(2)} but public/{match.group(2).lstrip('/')} does not exist")
+        digest = hashlib.sha256(asset.read_bytes()).hexdigest()[:10]
+        return f"{match.group(1)}{match.group(2)}?v={digest}{match.group(3)}"
+
+    return ASSET_REF.sub(stamp, page_html)
+
+
 def build(out: Path) -> None:
     if out.resolve() in (ROOT, ROOT.parent) or ROOT not in out.resolve().parents:
         sys.exit(f"refusing to build into {out}: output must be a folder inside the repo")
@@ -88,7 +105,8 @@ def build(out: Path) -> None:
         variables, body = parse_page(page.read_text(encoding="utf-8"), page.name)
         variables.setdefault("base", "")
         variables.setdefault("year", str(datetime.date.today().year))
-        (out / page.name).write_text(render(body, variables, page.name), encoding="utf-8")
+        rendered = fingerprint(render(body, variables, page.name), page.name)
+        (out / page.name).write_text(rendered, encoding="utf-8")
     print(f"built {len(pages)} page(s) + {sum(1 for p in PUBLIC.rglob('*') if p.is_file())} static file(s) -> {out.relative_to(ROOT)}/")
 
 

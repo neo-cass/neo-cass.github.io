@@ -9,13 +9,16 @@
 
   Each link carries data-pswp-width / data-pswp-height (the full-size pixel dimensions),
   which PhotoSwipe needs to lay out the image before it has loaded.
+
+  The ?v= on the module URLs is the vendored PhotoSwipe version; bump it when upgrading so
+  browsers never mix an old and a new file.
 */
-import PhotoSwipeLightbox from '/assets/vendor/photoswipe/photoswipe-lightbox.esm.min.js';
+import PhotoSwipeLightbox from '/assets/vendor/photoswipe/photoswipe-lightbox.esm.min.js?v=5.4.4';
 
 const lightbox = new PhotoSwipeLightbox({
   gallery: '.photo-strip',
   children: 'a',
-  pswpModule: () => import('/assets/vendor/photoswipe/photoswipe.esm.min.js'),
+  pswpModule: () => import('/assets/vendor/photoswipe/photoswipe.esm.min.js?v=5.4.4'),
   bgOpacity: 1,                    // fully opaque: no page text ghosting through behind the photo
   closeTitle: 'Close',
   zoomTitle: 'Zoom',

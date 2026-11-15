@@ -36,6 +36,9 @@ python3 scripts/build.py --serve      # build, then http://localhost:8000
 python3 scripts/build.py && python3 scripts/check_site.py
 ```
 
+The build also appends a content fingerprint (`?v=<hash>`) to every stylesheet and script URL,
+so a browser holding an old cached CSS can never be paired with newer HTML.
+
 Templates are deliberately tiny: `{{ name }}` fills a value from the page's front matter and
 `{% include "file.html" %}` inserts a partial. An unknown name or missing partial fails the
 build. Shared markup (head, nav, footer) lives once in `src/partials/`; `base` is `""` on

@@ -369,7 +369,7 @@ h2 {                               /* display-lg */
   each links to the full-size image.
 */
 .photo-strip {
-  max-width: 720px;
+  max-width: 880px;                /* same width as the two-card grid above */
   margin-inline: auto;
   display: flex;
   gap: var(--space-sm);

@@ -18,7 +18,7 @@ All under public/ (copied to the site by scripts/build.py):
   assets/images/profile.webp                   avatar (400 px)
   assets/images/og-image.jpg                   1200x630 social-share card
   assets/images/gallery/<name>.webp            1200 px, shown on click
-  assets/images/gallery/thumbs/<name>.webp     480 px, shown in the strip
+  assets/images/gallery/thumbs/<name>.webp     640 px, shown in the strip
   assets/images/cv-preview.webp                first page of the CV (only with --cv-pdf)
   assets/icons/icon-192.png, apple-touch-icon.png, favicon.ico
 
@@ -108,7 +108,7 @@ def main() -> None:
     for name, (src, box) in GALLERY.items():
         im = load(originals, src).crop(box)
         for path, width in ((IMG / "gallery" / f"{name}.webp", 1200),
-                            (IMG / "gallery" / "thumbs" / f"{name}.webp", 480)):
+                            (IMG / "gallery" / "thumbs" / f"{name}.webp", 640)):
             save_webp(im, path, width)
             written.append(path)
 
