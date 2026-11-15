@@ -182,6 +182,14 @@ h2 {
 .pill:hover { background: var(--parchment-hover); text-decoration: none; }
 .pill:active { transform: scale(0.95); }
 
+/* ---------- 404 ---------- */
+.notfound {
+  min-height: calc(100vh - var(--nav-h) - 90px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* ---------- Research ---------- */
 .card {
   display: block;
