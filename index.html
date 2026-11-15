@@ -4,73 +4,36 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Neo Cass</title>
-<style>
-  :root {
-    --bg: #0b0c0e;
-    --fg: #f4f4f2;
-    --muted: #9a9a9a;
-    --accent: #6ee7b7;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body {
-    height: 100%;
-  }
-  body {
-    background: var(--bg);
-    color: var(--fg);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-  }
-  main {
-    max-width: 560px;
-    text-align: center;
-  }
-  h1 {
-    font-size: clamp(2rem, 6vw, 3.25rem);
-    font-weight: 700;
-    letter-spacing: -0.02em;
-  }
-  p.tagline {
-    margin-top: 0.75rem;
-    color: var(--muted);
-    font-size: 1.1rem;
-  }
-  nav {
-    margin-top: 2.5rem;
-    display: flex;
-    gap: 1.5rem;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  nav a {
-    color: var(--fg);
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    padding-bottom: 2px;
-    transition: border-color 0.15s ease, color 0.15s ease;
-  }
-  nav a:hover {
-    color: var(--accent);
-    border-color: var(--accent);
-  }
-  footer {
-    margin-top: 3rem;
-    color: var(--muted);
-    font-size: 0.85rem;
-  }
-</style>
+<meta name="description" content="Neo Cass — software engineer at CERN.">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 <main>
-  <h1>Neo Cass</h1>
-  <p class="tagline">Welcome — this site is under construction.</p>
-  <nav>
-    <a href="https://github.com/neo-cass" target="_blank" rel="noopener">GitHub</a>
-  </nav>
-  <footer>&copy; 2026 Neo Cass</footer>
+  <header class="hero">
+    <div class="photo" id="photo" aria-hidden="false">
+      <!-- Drop your photo at assets/photo.jpg; initials show until it exists. -->
+      <img src="assets/photo.jpg" alt="Photo of Neo Cass" width="140" height="140"
+           onerror="this.remove(); document.getElementById('photo').textContent = 'NC';">
+    </div>
+    <h1>Neo Cass</h1>
+    <p class="tagline">Software engineer at CERN</p>
+
+    <nav class="links" aria-label="Profiles">
+      <a class="primary" href="/cv/NeoCassCV.pdf">Résumé</a>
+      <a href="https://github.com/neo-cass" target="_blank" rel="noopener me">GitHub</a>
+      <a href="https://linkedin.com/in/neocass" target="_blank" rel="noopener me">LinkedIn</a>
+      <a href="https://orcid.org/0009-0008-6583-9065" target="_blank" rel="noopener me">ORCID</a>
+    </nav>
+  </header>
+
+  <section aria-labelledby="pub-heading">
+    <h2 id="pub-heading">Publication</h2>
+    <a class="card" href="https://doi.org/10.17181/x7kbq-qrv65" target="_blank" rel="noopener">
+      <div class="title">RADE JAPC Service: A New Service For Controlling and Monitoring Devices at CERN</div>
+      <div class="meta">Master's thesis · University of Bath &amp; CERN · 2026 · doi:10.17181/x7kbq-qrv65</div>
+    </a>
+  </section>
 </main>
+<footer>&copy; 2026 Neo Cass</footer>
 </body>
 </html>
