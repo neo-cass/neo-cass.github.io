@@ -53,6 +53,8 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+[hidden] { display: none !important; }
+
 img { display: block; max-width: 100%; height: auto; }
 
 a { color: var(--primary); text-decoration: none; }
@@ -190,11 +192,20 @@ h2 {
   justify-content: center;
 }
 
-/* ---------- Research ---------- */
-.card {
-  display: block;
-  max-width: 640px;
+/* ---------- Cards (publications, presentation) ---------- */
+.cards {
+  max-width: 880px;
   margin: 40px auto 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.cards--single { grid-template-columns: 1fr; max-width: 640px; }
+
+.card {
+  display: flex;
+  flex-direction: column;
   padding: 24px;
   border-radius: var(--radius-card);
   background: var(--canvas);
@@ -202,7 +213,17 @@ h2 {
   text-align: left;
 }
 
+/* On white tiles the card needs its own fill to read as a card. */
+.tile--light .card { background: var(--parchment); }
+
 .card:hover { text-decoration: none; }
+
+.card__img {
+  width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+  border-radius: var(--radius-sm);
+}
 
 .card__title {
   font-size: 21px;
@@ -220,15 +241,16 @@ h2 {
 }
 
 .card__link {
-  display: inline-block;
-  margin-top: 16px;
+  align-self: flex-start;
+  margin-top: auto;
+  padding-top: 16px;
   color: var(--primary);
 }
 
 .card:hover .card__link { text-decoration: underline; }
 .card__link::after { content: " \203A"; }
 
-/* ---------- Photo strip (small, below the research) ---------- */
+/* ---------- Photo strip (small, below the presentation) ---------- */
 .photos { padding-top: 64px; padding-bottom: 64px; }
 
 .photos h2 { font-size: clamp(24px, 4vw, 28px); }
@@ -253,12 +275,79 @@ h2 {
   min-width: 0;
   border-radius: var(--radius-sm);
   overflow: hidden;
-  background: var(--parchment);
+  background: var(--hairline);
 }
 
 .photo-strip a { display: block; }
 .photo-strip img { width: 100%; height: auto; transition: opacity 0.2s ease; }
 .photo-strip a:hover img { opacity: 0.9; }
+
+/* ---------- Contact form ---------- */
+.form {
+  max-width: 520px;
+  margin: 32px auto 0;
+  display: grid;
+  gap: 16px;
+  text-align: left;
+}
+
+.form label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.224px;
+}
+
+.form input[type="text"],
+.form input[type="email"],
+.form textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid transparent;
+  border-radius: 11px;
+  background: var(--parchment);
+  color: var(--ink);
+  font: inherit;
+  letter-spacing: inherit;
+}
+
+.form textarea { min-height: 140px; resize: vertical; }
+
+.form input:focus-visible,
+.form textarea:focus-visible { background: var(--canvas); border-color: var(--primary-focus); }
+
+/* The one filled blue pill on the page: a real submit action, not a link group. */
+.button {
+  justify-self: start;
+  padding: 11px 22px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--primary);
+  color: #fff;
+  font: inherit;
+  font-size: 17px;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+.button:hover { background: var(--primary-focus); }
+.button:active { transform: scale(0.95); }
+.button[disabled] { opacity: 0.5; cursor: default; transform: none; }
+
+.form__status {
+  min-height: 1.47em;
+  font-size: 14px;
+  color: var(--ink-muted-80);
+}
+
+.form__note {
+  font-size: 12px;
+  line-height: 1.33;
+  letter-spacing: -0.12px;
+  color: var(--ink-muted);
+}
 
 /* ---------- Footer ---------- */
 .footer {
@@ -288,6 +377,7 @@ h2 {
   .hero { padding-top: 40px; }
   .avatar { width: 128px; height: 128px; }
   .pill { font-size: 15px; padding: 10px 18px; }
+  .cards { grid-template-columns: 1fr; gap: 16px; }
 
   /* Two photos per row, still justified. */
   .photo-strip { flex-direction: column; gap: 10px; }
