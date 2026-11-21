@@ -26,7 +26,7 @@ scripts/
 dist/                 build output (git-ignored)
 ```
 
-The résumé at `/cv/cv.pdf` is built and published by the separate
+The CV at `/cv/cv.pdf` is built and published by the separate
 [`cv`](https://github.com/neo-cass/cv) repository (a GitHub Pages project site on the same domain).
 
 ## Develop
@@ -71,10 +71,11 @@ uv run --with pillow --with pillow-heif --with pymupdf \
 ```
 
 Crop boxes live at the top of that script, and it fails if any metadata survives. The CV
-preview (`cv-preview.webp`) is a **snapshot of the CV's first page**: re-run with `--cv-pdf`
-whenever the CV changes. To add a photo: add it to `GALLERY`, run the script, add a `<figure>`
-(with `data-pswp-width`/`-height` on its link) to `index.html` and an aspect rule
-`.photo--<name>` in `style.css`, then run the checks.
+preview (`cv-preview.webp`) is a **snapshot of the CV's first page**; the current design does
+not show it, but re-run with `--cv-pdf` whenever the CV changes if you bring it back. To add a
+photo: add it to `GALLERY`, run the script, add a link (with `data-pswp-width`/`-height`)
+wrapping its thumbnail inside `.photo-strip` in `index.html`, then run the checks. Thumbnails
+are cropped to 3:4 by CSS, so no per-photo rule is needed.
 
 ## Photo lightbox
 
@@ -86,8 +87,8 @@ plain links to the full image.
 
 ## Contact form
 
-Uses [Web3Forms](https://web3forms.com). The form, the hero "Contact" pill and the footer
-link are **hidden on the live site until a valid access key is set**:
+Uses [Web3Forms](https://web3forms.com). The form and the `[Contact]` link at the top of the
+page are **hidden on the live site until a valid access key is set**:
 
 1. Get a key at web3forms.com for the address that should receive messages.
 2. Replace `YOUR_WEB3FORMS_ACCESS_KEY` in `src/pages/index.html` with it (a UUID; anything
@@ -98,13 +99,11 @@ On `localhost` the form is shown with a "preview only" notice so layout can be c
 
 ## Design
 
-Follows the "Apple design analysis" `DESIGN.md` from
-[awesome-design-md](https://github.com/VoltAgent/awesome-design-md): Action Blue as the only
-accent, 17px body, tight display type, 44px touch targets, spec breakpoints. Light and dark
-themes follow the visitor's system setting; dark uses the spec's dark surfaces. The header of
-`public/assets/css/style.css` lists the few deliberate deviations (no dark tiles or black nav
-in the light theme; slightly darker small-text greys and form borders for accessibility
-contrast).
+Plain, text-first and monospace, written up in [`DESIGN.md`](DESIGN.md): one narrow column,
+the visitor's own monospace font (nothing downloaded), greyscale only, no rounded corners,
+shadows or gradients. Entries are rows with the year on the left; profile links sit in
+`[brackets]`. Light and dark themes follow the visitor's system setting. The header of
+`public/assets/css/style.css` has the short version.
 
 ## Analytics (optional)
 

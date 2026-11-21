@@ -13,16 +13,12 @@ base: /
 
 {% include "nav.html" %}
 
-<main id="main">
-  <section class="tile tile--light notfound">
-    <div class="tile__inner">
-      <h1>404</h1>
-      <p class="lead">This page doesn’t exist.</p>
-      <nav class="pills" aria-label="Recovery">
-        <a class="pill" href="/">Back home</a>
-      </nav>
-    </div>
-  </section>
+<main id="main" class="page notfound">
+  <h1>404</h1>
+  <p class="muted">This page doesn’t exist.</p>
+  <nav class="links" aria-label="Recovery">
+    <a href="/">Back home</a>
+  </nav>
 </main>
 
 {% include "footer.html" %}
