@@ -87,20 +87,18 @@ plain links to the full image.
 
 ## Contact form
 
-Uses [Web3Forms](https://web3forms.com). The form and the `[Contact]` link at the top of the
-page are **hidden on the live site until a valid access key is set**:
+Uses [Web3Forms](https://web3forms.com) and is **live**: the access key is set in
+`src/pages/index.html` (the hidden `access_key` field). The key is public by design and can
+only send mail to the address it was issued for; that address is never in the repo.
 
-1. Get a key at web3forms.com for the address that should receive messages.
-2. Replace `YOUR_WEB3FORMS_ACCESS_KEY` in `src/pages/index.html` with it (a UUID; anything
-   else counts as "not set"). The key is public by design and can only send mail to that
-   address; the address itself is never in the repo.
-
-On `localhost` the form is shown with a "preview only" notice so layout can be checked first.
+To change the receiving address, get a new key at web3forms.com and replace the old one. If
+the field ever holds something that is not a valid key (a UUID), the form and the `[Contact]`
+link hide themselves on the live site; on `localhost` they show with a "preview only" notice.
 
 ## Design
 
 Plain, text-first and monospace, written up in [`DESIGN.md`](DESIGN.md): one narrow column,
-the visitor's own monospace font (nothing downloaded), greyscale text with full-colour photos, no rounded corners,
+one self-hosted monospace font (Inconsolata), greyscale text with full-colour photos, no rounded corners,
 shadows or gradients. Entries are rows with the year on the left; profile links sit in
 `[brackets]`. Light and dark themes follow the visitor's system setting. The header of
 `public/assets/css/style.css` has the short version.

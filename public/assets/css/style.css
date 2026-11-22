@@ -5,7 +5,7 @@
   this header is the short version.
 
   - One column, at most 72 characters wide, left-aligned.
-  - One typeface: the visitor's own monospace font. Nothing is downloaded.
+  - One typeface: Inconsolata, self-hosted (assets/fonts/inconsolata, SIL OFL).
   - Greyscale UI: ink, a muted grey, a hairline. No accent colour, no gradients,
     no shadows, no rounded corners. Photos (portrait and gallery) are the only colour.
   - Links are ink with a grey underline that darkens on hover. Profile links sit in
@@ -16,6 +16,9 @@
   Conventions
   - Colours and spacing are tokens (custom properties); never inline a hex below the
     token blocks.
+  - Spacing follows a 4px-based 8-point grid and the Gestalt law of proximity: the
+    closer two things belong together, the smaller the gap (description < entry <
+    heading-to-content < section). See DESIGN.md, Layout Principles.
   - Sizes are in rem so they follow the reader's browser setting (1rem = 16px).
   - Light and dark follow the visitor's system setting (prefers-color-scheme); only the
     token block changes.
@@ -34,19 +37,20 @@
   --underline: #bbbbbb;
   --field-border: #8a8a8a;         /* 3:1 against the page, for form-field edges */
 
-  /* Spacing */
-  --space-xs: 0.5rem;
-  --space-sm: 1rem;
-  --space-md: 1.5rem;
-  --space-lg: 3rem;
-  --space-xl: 4rem;
+  /* Spacing: 8-point grid with a 4px half-step */
+  --space-2xs: 0.25rem;            /*  4px */
+  --space-xs: 0.5rem;              /*  8px */
+  --space-sm: 0.75rem;             /* 12px */
+  --space-md: 1rem;                /* 16px */
+  --space-lg: 2rem;                /* 32px */
+  --space-xl: 3rem;                /* 48px */
 
   /* Layout */
-  --measure: 72ch;
+  --measure: 76ch;                 /* ~645px; Inconsolata is narrow (0.5em per character) */
   --gutter: 1rem;
   --label-w: 6ch;                  /* the year / label column */
 
-  --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  --mono: "Inconsolata", ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -58,6 +62,16 @@
     --underline: #555555;
     --field-border: #6a6a6a;
   }
+}
+
+/* ---------- Font ---------- */
+/* One variable file covers every weight (Latin subset, 34 KB); preloaded in head.html. */
+@font-face {
+  font-family: "Inconsolata";
+  font-style: normal;
+  font-weight: 200 900;
+  font-display: swap;
+  src: url("/assets/fonts/inconsolata/inconsolata-latin-wght-normal.woff2") format("woff2");
 }
 
 /* ---------- Base ---------- */
@@ -73,8 +87,8 @@ body {
   background: var(--bg);
   color: var(--ink);
   font-family: var(--mono);
-  font-size: 0.9375rem;            /* 15px */
-  line-height: 1.6;
+  font-size: 1.0625rem;            /* 17px: Inconsolata runs small, so this matches 15px SF Mono */
+  line-height: 1.5;
 }
 
 [hidden] { display: none !important; }   /* must beat component display rules */
@@ -107,7 +121,7 @@ a {
   top: -100px;
   left: var(--gutter);
   z-index: 20;
-  padding: var(--space-xs) var(--space-sm);
+  padding: var(--space-xs) var(--space-md);
   border: 1px solid var(--ink);
   background: var(--bg);
 }
@@ -127,7 +141,7 @@ a {
 .intro {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
+  gap: var(--space-md);
 }
 
 .avatar {
@@ -137,7 +151,7 @@ a {
 }
 
 .links {
-  margin-top: var(--space-md);
+  margin-top: var(--space-sm);
   display: flex;
   flex-wrap: wrap;
   gap: 0 1.5ch;
@@ -154,7 +168,7 @@ a {
 /* ---------- Sections and entries ---------- */
 .section h2 {
   margin: var(--space-lg) 0 var(--space-sm);
-  padding-bottom: var(--space-xs);
+  padding-bottom: var(--space-2xs);
   border-bottom: 1px solid var(--rule);
   font-weight: 400;
   color: var(--muted);
@@ -171,7 +185,7 @@ a {
 
 .entry__meta {
   color: var(--muted);
-  font-size: 0.875rem;             /* 14px */
+  font-size: 0.9375rem;            /* 15px */
 }
 
 /* ---------- Photos ---------- */
@@ -202,7 +216,7 @@ a {
 
 .form label {
   display: block;
-  margin-bottom: 0.25rem;
+  margin-bottom: var(--space-2xs);
   color: var(--muted);
 }
 
@@ -229,7 +243,7 @@ a {
 .button {
   justify-self: start;
   min-height: 2.75rem;
-  padding: var(--space-xs) var(--space-sm);
+  padding: var(--space-xs) var(--space-md);
   border: 1px solid var(--ink);
   border-radius: 0;
   background: var(--bg);
@@ -250,23 +264,23 @@ a {
 .form__status,
 .form__note {
   color: var(--muted);
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
 }
 
 /* ---------- 404 ---------- */
-.notfound p { margin: var(--space-xs) 0 var(--space-md); }
+.notfound p { margin: var(--space-xs) 0 var(--space-lg); }
 
 /* ---------- Footer ---------- */
-/* The footer keeps the body font size so its 72ch column matches the page's exactly
+/* The footer keeps the body font size so its 76ch column matches the page's exactly
    (ch scales with font size); only the text inside is smaller. */
 .footer {
   max-width: var(--measure);
-  margin: var(--space-xl) auto 0;
-  padding: var(--space-sm) var(--gutter) var(--space-xl);
+  margin: var(--space-lg) auto 0;
+  padding: 0 var(--gutter) var(--space-lg);
   color: var(--muted);
 }
 
-.footer p { font-size: 0.875rem; }
+.footer p { font-size: 0.9375rem; }
 
 /* The hairline spans the text column, not the padding. */
 .footer::before {
@@ -278,7 +292,7 @@ a {
 
 /* ---------- Phones ---------- */
 @media (max-width: 480px) {
-  .page { padding-top: 2.5rem; }
+  .page { padding-top: var(--space-lg); }
   .entry { grid-template-columns: 1fr; }
   .photo-strip { grid-template-columns: repeat(2, 1fr); }
 }

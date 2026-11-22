@@ -1,6 +1,6 @@
 ---
-title: Neo Cass — Software Engineer at CERN
-description: Neo Cass is a software engineer at CERN. Publications, a conference presentation and CV.
+title: Neo Cass — Computing Engineer
+description: Neo Cass, Computing Engineer. Publications, a conference presentation and CV.
 canonical: https://neocass.com/
 ---
 <!DOCTYPE html>
@@ -25,7 +25,7 @@ canonical: https://neocass.com/
       <img class="avatar" src="/assets/images/profile.webp" alt="Portrait of Neo Cass" width="400" height="400" fetchpriority="high">
       <div>
         <h1>Neo Cass</h1>
-        <p class="muted">Software Engineer at CERN</p>
+        <p class="muted">Computing Engineer, currently at CERN</p>
       </div>
     </div>
 
@@ -113,18 +113,17 @@ canonical: https://neocass.com/
   </section>
 
   <!--
-    Contact form (Web3Forms). Hidden on the live site until a real access key is set; on
-    localhost it shows with a notice so you can preview it.
-    1. Get a key at https://web3forms.com by entering the address that should receive messages.
-    2. Replace YOUR_WEB3FORMS_ACCESS_KEY below with it (a UUID). The key is public by design and
-       can only send mail to that address; the address itself never appears on the page.
+    Contact form (Web3Forms). The access_key below is live. It is public by design: it can
+    only send mail to the address it was issued for, which never appears on the page. To
+    change the receiving address, get a new key at https://web3forms.com and replace it.
+    With no valid key (a UUID) the form hides itself on the live site.
     Logic lives in public/assets/js/contact.js.
   -->
   <section class="section" id="contact" aria-labelledby="contact-heading" data-contact hidden>
     <h2 id="contact-heading">Contact</h2>
 
     <form class="form" id="contact-form" method="post" action="https://api.web3forms.com/submit">
-      <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY">
+      <input type="hidden" name="access_key" value="038c3218-361b-4f88-a398-c3f0ce5cf75c">
       <input type="hidden" name="subject" value="New message from neocass.com">
       <!-- Honeypot: people never see or tick this; simple bots do. -->
       <input class="hp" type="checkbox" name="botcheck" tabindex="-1" autocomplete="off">

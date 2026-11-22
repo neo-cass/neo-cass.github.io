@@ -14,8 +14,8 @@ The plainness is deliberate. Engineers and hiring managers read heavy styling as
 a bare page puts the work (a CERN thesis, a poster, a talk) first and signals that someone
 chose every element. Restraint is the personality: decoration is never added to fill space.
 
-- **Density:** Airy vertically, compact horizontally. Generous gaps between sections, tight
-  rows within them.
+- **Density:** Compact but not cramped. Clear gaps between sections, tight rows within
+  them; white space only where it separates groups, never as filler.
 - **Mood:** Utilitarian, calm, confident. Closer to a man page than to a portfolio.
 
 ## 2. Color Palette & Roles
@@ -40,15 +40,20 @@ colour on the page, so they stand out against the greyscale text.
 
 ## 3. Typography Rules
 
-- **One typeface: the visitor's own monospace font** (SF Mono on Apple devices, Consolas on
-  Windows, Liberation Mono or similar on Linux). No web fonts are downloaded, ever.
-- **Body:** 15px (0.9375rem), line height 1.6. Every size is in rem so it follows the
-  reader's browser setting.
+- **One typeface: Inconsolata**, self-hosted from `public/assets/fonts/inconsolata/` (one
+  34 KB variable file, Latin subset, SIL Open Font License in `OFL.txt`). It is preloaded,
+  shown with `font-display: swap`, and falls back to the system monospace font. Nothing is
+  loaded from Google or any other font service. It was chosen so the page looks the same on
+  every device (the old system-font stack showed SF Mono, Menlo or Consolas depending on
+  the browser) and for its calm, slightly narrow, humanist shapes.
+- **Body:** 17px (1.0625rem), line height 1.5. Inconsolata has a small x-height, so 17px
+  reads like 15px in most monospace fonts. Every size is in rem so it follows the reader's
+  browser setting.
 - **Name (h1):** the same size as the body, bold. Hierarchy comes from weight and position,
   not from big type.
 - **Section headings (h2):** body size, regular weight, Muted, sentence case
   ("Publications", "Presentations", "CV", "Photos").
-- **Descriptions and footer:** 14px, Muted, sentence case with proper nouns capitalised
+- **Descriptions and footer:** 15px (0.9375rem), Muted, sentence case with proper nouns capitalised
   ("Master’s thesis · University of Bath & CERN").
 - **Separators:** a middle dot with spaces ( · ) between facts in a description.
 - **Naming:** the document is always called **CV**, never "résumé". Profile links use each
@@ -74,14 +79,39 @@ colour on the page, so they stand out against the greyscale text.
 * **Never used:** rounded corners, pills, cards, shadows, gradients, glow, emoji as icons,
   icon fonts, accent colours, entrance or scroll animations.
 
+## 6. AI-look review
+
+Checked on 22 Nov 2026 with the `unslop-ui` audit (its scanner plus a manual pass over the
+nine common "looks AI-generated" patterns). Result: clean, scanner score 0. No
+Tailwind/shadcn defaults, no purple or indigo, no gradients, no gratuitous motion, no
+rounded corners, no glow, no emoji icons, no centred hero with feature cards. The only
+item it raised, the generic system font, was resolved by switching to Inconsolata. Re-run
+the audit after any visual redesign and keep this section up to date.
+
 ## 5. Layout Principles
 
-- **One left-aligned column**, at most 72 characters wide, centred on the page, with a 16px
+- **One left-aligned column**, at most 76 characters wide (about 645px), centred on the page, with a 16px
   gutter on each side so nothing touches the screen edge on phones.
 - **Top to bottom:** header (portrait, name, role, profile links), Publications,
   Presentations, CV, Photos, then the contact form when it is enabled, then the footer.
   There is no navigation bar; the page is short enough to scroll.
-- **Spacing rhythm:** 64px above the header (40px on phones), 48px above each section
-  heading, 16px between entries, 64px before the footer.
+- **Spacing system: an 8-point grid with a 4px half-step** (the scale used by Material
+  Design and most product design systems), applied with the **Gestalt law of proximity**:
+  things that belong together sit closer than things that do not, so the gaps alone show
+  the structure without extra boxes or lines.
+
+  | Token | Size | Used for |
+  |---|---|---|
+  | `--space-2xs` | 4px | Heading text to its hairline; form label to field |
+  | `--space-xs` | 8px | Between photo thumbnails; button and field padding |
+  | `--space-sm` | 12px | Name block to profile links; hairline to first entry; between entries; between form fields; footer hairline to text |
+  | `--space-md` | 16px | Portrait to name; horizontal button padding |
+  | `--space-lg` | 32px | Above each section heading; before the footer; below the footer; top of page on phones |
+  | `--space-xl` | 48px | Top of page on desktop |
+
+  The proximity order, from closest to furthest: a title and its description (no gap, just
+  line height) < one entry and the next (12px) < a heading and its content (16px including
+  the hairline) < one section and the next (32px). Each step is clearly larger than the one
+  before, so the eye groups correctly. Don't add a gap that breaks that order.
 - **Footer:** "© year Neo Cass" in Muted under a hairline that spans the text column.
 - **Breakpoint:** a single one at 480px, where entry rows stack and photos go two across.

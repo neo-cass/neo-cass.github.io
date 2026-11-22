@@ -48,7 +48,7 @@ GALLERY = {
     "thesis-talk": ("IMG_1909.HEIC", (480, 700, 2500, 3300)),  # screen + speaker + lectern
     "poster-day": ("IMG_2651.jpeg", (0, 0, 2733, 2540)),
 }
-PROFILE = ("IMG_5073.HEIC", (1062, 610, 1922, 1470))  # head and shoulders
+PROFILE = ("IMG_5073.HEIC", (1062, 740, 1922, 1600))  # head and shoulders
 FACE = ("IMG_5073.HEIC", (1208, 702, 1776, 1270))     # tight crop for tiny icons
 OG = ("IMG_5073.HEIC", (480, 560, 2480, 1610))        # 1200:630 ratio
 
