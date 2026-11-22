@@ -6,8 +6,8 @@
 
   - One column, at most 72 characters wide, left-aligned.
   - One typeface: the visitor's own monospace font. Nothing is downloaded.
-  - Greyscale only: ink, a muted grey, a hairline. No accent colour, no gradients,
-    no shadows, no rounded corners.
+  - Greyscale UI: ink, a muted grey, a hairline. No accent colour, no gradients,
+    no shadows, no rounded corners. Photos (portrait and gallery) are the only colour.
   - Links are ink with a grey underline that darkens on hover. Profile links sit in
     [square brackets].
   - Sections are a muted heading over a hairline; each entry is a two-column row with
@@ -134,7 +134,6 @@ a {
   width: 4rem;
   height: 4rem;
   object-fit: cover;
-  filter: grayscale(1);
 }
 
 .links {
@@ -177,9 +176,8 @@ a {
 
 /* ---------- Photos ---------- */
 /*
-  Four thumbnails in a row (two on phones), cropped to 3:4 and shown in greyscale;
-  hovering one shows it in colour. Each links to the full-size image, which
-  public/assets/js/gallery.js opens in a lightbox.
+  Four thumbnails in a row (two on phones), cropped to 3:4, in full colour. Each links
+  to the full-size image, which public/assets/js/gallery.js opens in a lightbox.
 */
 .photo-strip {
   display: grid;
@@ -193,15 +191,7 @@ a {
   width: 100%;
   aspect-ratio: 3 / 4;
   object-fit: cover;
-  filter: grayscale(1);
-  transition: filter 0.2s ease;
 }
-
-@media (hover: hover) {
-  .photo-strip a:hover img { filter: none; }
-}
-
-.photo-strip a:focus-visible img { filter: none; }
 
 /* ---------- Contact form ---------- */
 .form {

@@ -7,7 +7,7 @@ change this file first when the design changes.
 ## 1. Visual Theme & Atmosphere
 
 **Plain, quiet and text-first, like a well-kept README.** One narrow column of monospace
-text on a flat background, greyscale only. Nothing moves, glows or floats. The page is meant
+text on a flat greyscale background, with the photos as the only colour. Nothing moves, glows or floats. The page is meant
 to be read in under a minute: who this is, what they have published, where to find the CV.
 
 The plainness is deliberate. Engineers and hiring managers read heavy styling as a template;
@@ -20,7 +20,8 @@ chose every element. Restraint is the personality: decoration is never added to 
 
 ## 2. Color Palette & Roles
 
-Greyscale only. No accent colour: links are told apart by their underline, not by hue.
+Greyscale only for text and lines. No accent colour: links are told apart by their
+underline, not by hue.
 
 | Role | Light | Dark | Used for |
 |---|---|---|---|
@@ -34,8 +35,8 @@ Greyscale only. No accent colour: links are told apart by their underline, not b
 Light and dark follow the visitor's system setting. Only the colour tokens change between
 them; nothing else.
 
-Photos are shown in **greyscale** so they sit inside the palette, and come back to full
-colour on hover or keyboard focus.
+Photos (the portrait and the gallery) are shown in **full colour**: they are the only
+colour on the page, so they stand out against the greyscale text.
 
 ## 3. Typography Rules
 
@@ -59,13 +60,13 @@ colour on hover or keyboard focus.
   on hover. No colour change, no animation.
 * **Profile links:** a single wrapping row under the name, each wrapped in Muted square
   brackets: `[CV] [GitHub] [LinkedIn] [ORCID]`. Hover underlines the word itself.
-* **Portrait:** a small 64px square, greyscale, sharp corners, beside the name and role.
+* **Portrait:** a small 64px square, full colour, sharp corners, beside the name and role.
 * **Sections:** a Muted heading sitting on a full-width Rule hairline. No boxes or cards.
 * **Entries:** a two-column row. The left column (6 characters wide) holds the year, or a
   short label such as "PDF", in Muted. The right column holds the title as a link with the
   description underneath. On phones the label stacks above the title.
-* **Photos:** a grid of four thumbnails cropped to 3:4 (two per row on phones), sharp
-  corners, small even gaps. A click opens the full image in a lightbox.
+* **Photos:** a grid of four full-colour thumbnails cropped to 3:4 (two per row on phones),
+  sharp corners, small even gaps. A click opens the full image in a lightbox.
 * **Inputs/Forms:** square-cornered fields with a 1px Field-edge border on the page colour;
   the border turns Ink on focus. Labels are Muted, above each field. The button is a
   square-cornered Ink outline that fills with Ink on hover.

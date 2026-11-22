@@ -100,7 +100,7 @@ On `localhost` the form is shown with a "preview only" notice so layout can be c
 ## Design
 
 Plain, text-first and monospace, written up in [`DESIGN.md`](DESIGN.md): one narrow column,
-the visitor's own monospace font (nothing downloaded), greyscale only, no rounded corners,
+the visitor's own monospace font (nothing downloaded), greyscale text with full-colour photos, no rounded corners,
 shadows or gradients. Entries are rows with the year on the left; profile links sit in
 `[brackets]`. Light and dark themes follow the visitor's system setting. The header of
 `public/assets/css/style.css` has the short version.

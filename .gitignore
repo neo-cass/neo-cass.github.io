@@ -7,3 +7,10 @@ dist/
 # Untouched camera originals carry EXIF/GPS data and must never be committed.
 # Keep them outside the repo, or in this folder (ignored) while building images.
 originals/
+
+# graphify: machine-specific state (absolute paths, mtimes, local caches, label
+# signatures). Rebuilt by `graphify update .`. Only graph.json, graph.html and
+# GRAPH_REPORT.md in graphify-out/ are meant to be shared.
+graphify-out/cache/
+graphify-out/manifest.json
+graphify-out/.graphify_*
