@@ -49,7 +49,7 @@ GALLERY = {
     "poster-day": ("IMG_2651.jpeg", (0, 0, 2733, 2540)),
 }
 PROFILE = ("IMG_5073.HEIC", (1062, 740, 1922, 1600))  # head and shoulders
-FACE = ("IMG_5073.HEIC", (1208, 702, 1776, 1270))     # tight crop for tiny icons
+FACE = ("IMG_5073.HEIC", (1208, 812, 1776, 1380))     # tight crop for tiny icons
 OG = ("IMG_5073.HEIC", (480, 560, 2480, 1610))        # 1200:630 ratio
 
 SRGB = ImageCms.createProfile("sRGB")
