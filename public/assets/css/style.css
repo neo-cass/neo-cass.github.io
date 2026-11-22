@@ -261,8 +261,7 @@ a {
 
 .form__status { min-height: 1.6em; }
 
-.form__status,
-.form__note {
+.form__status {
   color: var(--muted);
   font-size: 0.9375rem;
 }
