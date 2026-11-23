@@ -103,11 +103,14 @@ shadows or gradients. Entries are rows with the year on the left; profile links 
 `[brackets]`. Light and dark themes follow the visitor's system setting. The header of
 `public/assets/css/style.css` has the short version.
 
-## Analytics (optional)
+## Analytics
 
-A disabled GoatCounter snippet (no cookies, no personal data) is in
-`src/partials/analytics.html`. To enable it, follow the comments there and in `head.html`,
-including the matching change to the Content Security Policy.
+GoatCounter (no cookies, no personal data, no consent banner), dashboard at
+https://neocass.goatcounter.com. The snippet is `src/partials/analytics.html`, included on the
+home page and the 404 page (so broken incoming links show up as 404 paths). The script itself
+is vendored in `public/assets/vendor/goatcounter/` so the CSP keeps `script-src 'self'`; only
+the count endpoint is allowed in `connect-src`. Visits from localhost are never counted. To
+exclude your own visits, open https://neocass.com/#toggle-goatcounter once in each browser.
 
 ## Notes
 

@@ -44,7 +44,7 @@ ICONS = PUBLIC / "assets" / "icons"
 # minimal: only dead space (ceiling, a stranger's shoes) is trimmed.
 GALLERY = {
     "cern-tunnel": ("IMG_1860.HEIC", (0, 0, 3024, 4032)),
-    "graduation": ("IMG_5073.HEIC", (0, 0, 3024, 4032)),
+    "graduation": ("IMG_5073.HEIC", (0, 0, 3024, 3360)),  # floor trimmed below the shoes
     "thesis-talk": ("IMG_1909.HEIC", (480, 700, 2500, 3300)),  # screen + speaker + lectern
     "poster-day": ("IMG_2651.jpeg", (0, 0, 2733, 2540)),
 }

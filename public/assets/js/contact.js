@@ -1,7 +1,7 @@
 /*
   Contact form behaviour (Web3Forms). Plain ES5-style JS, no dependencies.
 
-  - Live site, no valid access key set -> the form, nav pill and footer link stay hidden.
+  - Live site, no valid access key set -> the form and the [Contact] link stay hidden.
   - Valid access key set               -> they appear and the form submits over fetch().
   - localhost preview, no valid key    -> they appear with a notice, and sending is disabled,
                                           so the layout can be previewed before going live.

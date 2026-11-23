@@ -3,7 +3,7 @@
 
     python3 scripts/build.py && python3 scripts/check_site.py
 
-Checks dist/ (the output of build.py), i.e. exactly what gets deployed. Exits non-zero if anything fails, so it also runs in CI (.github/workflows/check.yml).
+Checks dist/ (the output of build.py), i.e. exactly what gets deployed. Exits non-zero if anything fails, so it also runs in CI (.github/workflows/site.yml).
 
 What it guards
   templates   no unrendered {{ }} / {% %} tokens left in any page
@@ -13,6 +13,7 @@ What it guards
               target=_blank links carry rel=noopener
   privacy     no email addresses or phone numbers anywhere in published files
   contact     every [data-contact] element ships hidden (form is never shown half-configured)
+  analytics   the GoatCounter endpoint is allowed by the CSP's connect-src (else nothing is counted)
   seo         title, description, canonical, Open Graph image, valid JSON-LD, robots + sitemap
   weight      per-file size budgets
 """
@@ -70,6 +71,7 @@ class Page(HTMLParser):
         self.inline_scripts = 0
         self.jsonld: list[str] = []
         self.data_contact: list[dict] = []
+        self.beacons: list[str] = []            # data-goatcounter endpoints
         self.title = ""
         self._in_title = False
         self._script: str | None = None
@@ -92,6 +94,8 @@ class Page(HTMLParser):
         if tag == "title":
             self._in_title = True
         if tag == "script":
+            if "data-goatcounter" in a:
+                self.beacons.append(a["data-goatcounter"])
             if "src" in a:
                 self.refs.append(("src", a["src"]))
             elif a.get("type") == "application/ld+json":
@@ -160,6 +164,13 @@ for name, p in parsed.items():
         fail(name, f"{p.inline_scripts} inline <script> (blocked by CSP)")
     if p.handlers:
         fail(name, f"{p.handlers} inline event handler(s) (blocked by CSP)")
+
+    connect = re.search(r"connect-src([^;]*)", csp)
+    allowed = connect.group(1).split() if connect else []
+    for endpoint in p.beacons:
+        origin = re.match(r"https://[^/]+", endpoint)
+        if not origin or origin.group(0) not in allowed:
+            fail(name, f"analytics endpoint {endpoint} is not https or not in the CSP connect-src")
 
     for img in p.imgs:
         src = img.get("src", "?")
